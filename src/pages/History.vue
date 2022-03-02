@@ -1,0 +1,5 @@
+<template>
+  <div class="history">
+    <h1>История</h1>
+  </div>
+</template>
