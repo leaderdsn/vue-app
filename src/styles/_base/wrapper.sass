@@ -1,0 +1,26 @@
+.wrapper
+  width: 100%
+  padding: 0 15px
+  margin: 0 auto
+  box-sizing: border-box
+
+@include e-large-layout
+  .wrapper
+    max-width: 1140px
+
+@include large-layout
+  .wrapper
+    max-width: 960px
+
+@include medium-layout
+  .wrapper
+    max-width: 720px
+
+@include small-layout
+  .wrapper
+    max-width: 540px
+
+@include e-small-layout
+  .wrapper
+    max-width: 100%
+    padding: 0 10px

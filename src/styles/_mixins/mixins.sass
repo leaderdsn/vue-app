@@ -1,0 +1,19 @@
+@mixin e-small-layout
+  @media (max-width: 575px)
+    @content
+
+@mixin small-layout
+  @media (max-width: 767px) 
+    @content
+
+@mixin medium-layout
+  @media (max-width: 991px)  
+    @content
+
+@mixin large-layout
+  @media (max-width: 1199px)
+    @content
+
+@mixin e-large-layout
+  @media (min-width: 1200px)
+    @content
