@@ -1,15 +1,35 @@
 <template>
   <div class="box">
-    <h1>{{ str }}</h1>
+    <block v-for="(item, idx) in data" :key="idx" :data="item">
+      <template v-slot:b-header="{ item }">
+        <strong>{{ item.id }}</strong>
+        <p>{{ item.name }}</p>
+        <button @click="addItem(idx)">+</button>
+      </template>
+    </block>
   </div>
 </template>
 
 <script lang="ts">
+import { ArrayPropsDefinition } from 'vue/types/options'
+import Block from '@/components/Block.vue'
 export default {
+  components: { Block },
   name: 'Box',
   props: {
-    str: String,
-    default: ():string => ''
+    data: {
+      type: Array,
+      default: ():ArrayPropsDefinition<ObjectConstructor> => []
+    }
+  },
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  data () {
+    return {}
+  },
+  methods: {
+    addItem (idx: number):void {
+      this.$emit('addItem', idx)
+    }
   }
 }
 </script>
