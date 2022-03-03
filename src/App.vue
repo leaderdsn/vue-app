@@ -1,9 +1,16 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Главная страница</router-link> |
-      <router-link to="/history">История</router-link>
+    <div class="wrapper">
+      <navbar />
+      <router-view />
     </div>
-    <router-view/>
   </div>
 </template>
+
+<script>
+import Navbar from '@/components/Navbar'
+
+export default {
+  components: { Navbar }
+}
+</script>
