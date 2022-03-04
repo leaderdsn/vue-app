@@ -1,7 +1,10 @@
 <template>
   <div id="navbar">
-    <router-link to="/">Главная страница</router-link> |
-    <router-link to="/history">История</router-link>
+    <div class="wrapper">
+      <router-link to="/"><h1>Главная страница</h1></router-link>
+      <h1>|</h1>
+      <router-link to="/history"><h1>История</h1></router-link>
+    </div>
   </div>
 </template>
 
