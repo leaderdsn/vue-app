@@ -1,10 +1,14 @@
 <template>
   <div class="box">
-    <block v-for="(item, idx) in data" :key="idx" :data="item">
+    <block
+      :class="isBasket ? 'block--basket' : ''"
+      v-for="(item, idx) in data"
+      :key="idx" :data="item"
+    >
       <template v-slot:b-header="{ item }">
         <strong>{{ item.id }}</strong>
-        <p>{{ item.name }}</p>
-        <button @click="addItem(idx)">+</button>
+        <p>{{ item.title }}</p>
+        <button class="btn" @click="removeItem(idx)">{{isBasket ? '-' : '+'}}</button>
       </template>
     </block>
   </div>
@@ -20,15 +24,15 @@ export default {
     data: {
       type: Array,
       default: ():ArrayPropsDefinition<ObjectConstructor> => []
+    },
+    isBasket: {
+      type: Boolean,
+      default: (): boolean => false
     }
   },
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  data () {
-    return {}
-  },
   methods: {
-    addItem (idx: number):void {
-      this.$emit('addItem', idx)
+    removeItem (idx: number):void {
+      this.$emit('removeItem', idx)
     }
   }
 }
