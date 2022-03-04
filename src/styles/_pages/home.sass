@@ -1,0 +1,42 @@
+.home
+  display: grid
+  grid-template-columns: 1fr
+  grid-template-rows: max-content 1fr
+  grid-gap: 20px
+  height: 100%
+  margin-top: 60px
+  &-header
+    display: grid
+    grid-template-columns: 1fr 1fr
+    grid-template-rows: max-content
+    grid-row-gap: 20px
+    grid-column-gap: 40px
+    &-btn-panel
+      display: grid
+      grid-column-start: span 2
+      grid-row-start: 1
+      grid-template-columns: repeat(3, max-content)
+      grid-gap: 20px
+      padding: 10px 0
+      box-sizing: border-box
+      border-bottom: 1px solid $border-color2
+    &-item
+      display: grid
+      grid-template-columns: 1fr
+      grid-template-rows: max-content max-content
+      grid-gap: 10px 
+      label
+        display: grid
+        grid-template-columns: 1fr
+        grid-gap: 5px
+        color: $label-color
+  &-body
+    display: grid
+    grid-template-columns: 1fr 1fr
+    grid-template-rows: 1fr
+    grid-gap: 40px  
+    &-item
+      display: grid
+      grid-template-columns: 1fr
+      grid-template-rows: 1fr
+      height: calc(100vh - 260px)  
