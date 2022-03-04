@@ -5,10 +5,34 @@
   box-sizing: border-box
   padding: 2px
   background-color: $default-color
-  border: 1px solid $border-color2
+  border: 1px solid $border-color
   border-radius: 4px
-  height: 60px
+  height: max-content
+  min-height: 32px
   &-header
     display: grid
     grid-template-columns: max-content 1fr max-content
     grid-gap: 5px
+    align-items: center
+  &--basket
+    .block-header
+      grid-template-columns: max-content max-content 1fr
+      button
+        display: grid
+        grid-column-start: 1
+        grid-row-start: 1
+        align-items: center
+
+@include e-small-layout
+  .block
+    &-header
+      grid-template-columns: max-content 1fr
+      button
+        display: grid
+        grid-column-start: span 2
+    &--basket
+      .block-header
+        grid-template-columns: max-content 1fr
+        button
+          grid-column-start: span 2
+          grid-row-start: 2
