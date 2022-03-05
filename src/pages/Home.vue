@@ -2,15 +2,16 @@
   <div class="home">
     <div class="home-header">
       <div class="home-header-btn-panel">
-        <button class="btn btn-link"><router-link to="/history">История</router-link></button>
-        <button class="btn btn-link"><router-link to="/history/add">История добалений</router-link></button>
-        <button class="btn btn-link"><router-link to="/history/remove">История удалений</router-link></button>
+        <router-link to="history"><button class="btn btn-link">История</button></router-link>
+        <router-link :to="{path: 'history', query: { filter: 'added' }}"><button class="btn btn-link">История добалений</button></router-link>
+        <router-link :to="{path: 'history', query: { filter: 'deletion' }}"><button class="btn btn-link">История удалений</button></router-link>
+        <button class="btn btn--primary" @click="updateData">Обновить данные</button>
       </div>
       <div class="home-header-item">
         <h2>Рабочий стол</h2>
         <label>
           Поиск по наименованию
-          <input class="field-input" type="text" v-model="searchName" />
+          <input class="field-input" type="text" v-model="searchValue" />
         </label>
       </div>
       <div class="home-header-item">
@@ -20,7 +21,12 @@
     </div>
     <div class="home-body">
       <div class="home-body-item">
-        <box :data="searchItem" :isBasket="false" @removeItem="addItemToBasket"/>
+        <box v-if="UPLOADED" :data="FILTER_DATA" :isBasket="false" @removeItem="addItemToBasket"/>
+        <ui v-else-if="!UPLOADED && ERROR_DATA.length !== 0" class="errors-list">
+          <li v-for="(error, idx) in ERROR_DATA" :key="idx">
+            <strong>{{ error }}</strong>
+          </li>
+        </ui>
       </div>
       <div class="home-body-item">
         <box :data="BASKET_DATA" :isBasket="true" @removeItem="removeItemFromBasket"/>
@@ -31,101 +37,77 @@
 
 <script lang="ts">
 import Box from '@/components/Box.vue'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 import { IPost } from '@/interfaces/intefaces'
 import moment from 'moment'
-
-declare interface iBaseData {
-  searchName: string,
-}
 
 export default {
   name: 'Home',
   components: { Box },
-  data (): iBaseData {
-    return {
-      searchName: ''
+  created ():void {
+    if (!this.UPLOADED) {
+      this.getPostsDesktop()
     }
   },
-  created ():void {
-    this.$store.dispatch('getPostsDesktop')
-  },
   methods: {
+    ...mapMutations([
+      'recordingHistory',
+      'addBasket',
+      'addDesktop',
+      'removeBasket',
+      'removeDesktop',
+      'setData',
+      'setFilterValue',
+      'setUploaded'
+    ]),
+    ...mapActions(['getPostsDesktop']),
+    updateData ():void {
+      this.setUploaded(true)
+      this.getPostsDesktop()
+    },
     addItemToBasket (idx: number):void {
-      const { commit } = this.$store
       this.DESKTOP_DATA.forEach((item: IPost, index: number):void => {
-        if (idx === index) {
-          commit('removeDesktop', {
-            idx: idx,
-            del: 1
-          })
-          commit('addBasket', item)
+        if (idx === item.id) {
+          this.removeDesktop({ idx: index, del: 1 })
+          this.addBasket(item)
           const { id, title } = item
           const date = moment(new Date(), 'DD.MM.YYYY hh:mm').format('DD.MM.YYYY hh:mm')
-          this.writedHistory(id, title, 'Добавление', date)
+          this.writeToHistory(id, title, 'Добавление', date)
         }
       })
     },
     removeItemFromBasket (idx: number):void {
-      const { commit } = this.$store
       this.BASKET_DATA.forEach((item: IPost, index: number):void => {
-        if (idx === index) {
-          commit('removeBasket', {
-            idx: idx,
-            del: 1
-          })
-          commit('addDesktop', item)
+        if (idx === item.id) {
+          this.removeBasket({ idx: index, del: 1 })
+          this.addDesktop(item)
           const { id, title } = item
           const date = moment(new Date(), 'DD.MM.YYYY hh:mm').format('DD.MM.YYYY hh:mm')
-          this.writedHistory(id, title, 'Удаление', date)
+          this.writeToHistory(id, title, 'Удаление', date)
         }
       })
     },
-    writedHistory (id: number, title: string, type: string, date: string):void {
-      this.$store.commit('writeHistory', {
-        id,
-        title,
-        type,
-        date
-      })
+    writeToHistory (id: number, title: string, type: string, date: string):void {
+      this.recordingHistory({ id, title, type, date })
     }
   },
   computed: {
-    // sortDesktop ():iPost[] {
-    //   // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-    //   return this.searchItem.reverse()
-    // },
-    // sortBasket ():iPost[] {
-    //   // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-    //   //return this.basket.reverse()
-    // },
     ...mapGetters([
       'HISTORY_DATA',
       'DESKTOP_DATA',
-      'BASKET_DATA'
+      'BASKET_DATA',
+      'FILTER_DATA',
+      'ERROR_DATA',
+      'UPLOADED'
     ]),
-    searchItem: function ():IPost[] {
-      return this.DESKTOP_DATA.filter((item: IPost):boolean | IPost => {
-        return item.title.toLowerCase().indexOf(this.searchName) !== -1
-      })
+    searchValue: {
+      get: function (): IPost[] {
+        return this.$store.state.desktop.filterValue
+      },
+      set: function (value:string):void {
+        this.setFilterValue(value)
+      }
     }
   }
-
 }
 </script>
-
-  function commit(arg0: string, arg1: { id: number; title: string; type: string; date: string }) {
-    throw new Error('Function not implemented.')
-  }
-
-  function commit(arg0: string, arg1: { id: number; title: string; type: string; date: string }) {
-    throw new Error('Function not implemented.')
-  }
-
-  function commit(arg0: string, arg1: { id: number; title: string; type: string; date: string }) {
-    throw new Error('Function not implemented.')
-  }
-
-  function commit(arg0: string, arg1: { id: number; title: string; type: string; date: string }) {
-    throw new Error('Function not implemented.')
-  }
