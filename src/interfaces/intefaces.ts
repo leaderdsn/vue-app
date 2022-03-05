@@ -14,4 +14,7 @@ export interface IState {
   history: IPost[],
   desktop: IPost[],
   basket: IPost[],
+  filterValue: string,
+  errors: string[],
+  uploaded: boolean
 }
