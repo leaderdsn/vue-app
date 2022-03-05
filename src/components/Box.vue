@@ -8,7 +8,7 @@
       <template v-slot:b-header="{ item }">
         <strong>{{ item.id }}</strong>
         <p>{{ item.title }}</p>
-        <button class="btn" @click="removeItem(idx)">{{isBasket ? '-' : '+'}}</button>
+        <button class="btn btn--primary" @click="removeItem(item.id)">{{isBasket ? '-' : '+'}}</button>
       </template>
     </block>
   </div>
