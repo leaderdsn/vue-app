@@ -15,7 +15,7 @@
       display: grid
       grid-column-start: span 2
       grid-row-start: 1
-      grid-template-columns: repeat(3, max-content)
+      grid-template-columns: repeat(4, max-content)
       grid-gap: 20px
       padding: 10px 0
       box-sizing: border-box
@@ -39,4 +39,8 @@
       display: grid
       grid-template-columns: 1fr
       grid-template-rows: 1fr
-      height: calc(100vh - 260px)  
+      height: calc(100vh - 260px) 
+      .errors-list
+        li
+          list-style-type: none
+          color: $error-color
