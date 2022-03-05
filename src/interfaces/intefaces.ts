@@ -1,14 +1,16 @@
+import OperationTypeEnum from '@/enums/OperationTypeEnum'
+
+export declare type OperationType = typeof OperationTypeEnum
 export interface IPost {
   id: number
   title: string
   body?: string
   userId?: number
-  type?: string
+  type?: OperationType
   date?: string
 }
-export interface IDel {
+export interface IIdx {
   idx: number
-  del: number
 }
 export interface IState {
   history: IPost[],
@@ -16,5 +18,4 @@ export interface IState {
   basket: IPost[],
   filterValue: string,
   errors: string[],
-  uploaded: boolean
 }
