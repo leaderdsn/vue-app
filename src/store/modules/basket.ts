@@ -1,18 +1,21 @@
-import { IPost, IState, IDel } from '@/interfaces/intefaces'
+import { IPost, IState, IIdx } from '@/interfaces/intefaces'
 
 export default {
   state: {
     basket: []
   },
   getters: {
-    BASKET_DATA: (state:IState):IPost[] => state.basket
+    basketData: (state:IState):IPost[] => state.basket
   },
   mutations: {
     addBasket (state:IState, payload:IPost):void {
       state.basket.push(payload)
     },
-    removeBasket (state:IState, payload:IDel):void {
-      state.basket.splice(payload.idx, payload.del)
+    removeBasket (state:IState, payload:IIdx):void {
+      state.basket.splice(payload.idx, 1)
+    },
+    resetBasket (state:IState):void {
+      state.basket = []
     }
   }
 }
