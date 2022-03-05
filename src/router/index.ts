@@ -15,10 +15,15 @@ const routes: Array<RouteConfig> = [
     path: '/history',
     name: 'History',
     component: History
+  },
+  {
+    path: '*',
+    redirect: '/'
   }
 ]
 
 const router = new VueRouter({
+  mode: 'history',
   routes
 })
 
