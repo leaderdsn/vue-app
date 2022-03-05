@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
+import { IPost } from '@/interfaces/intefaces'
 
-const headers: Readonly<Record<string, string | boolean>> = {
+const headers = {
   Accept: 'application/json',
   'Content-Type': 'application/json'
 }
@@ -11,7 +12,7 @@ const api = axios.create({
 })
 
 export default {
-  getPosts ():Promise<AxiosResponse<never[], unknown>> {
-    return api.get('posts')
+  getPosts ():Promise<AxiosResponse<IPost[], string>> {
+    return api.get('/posts')
   }
 }

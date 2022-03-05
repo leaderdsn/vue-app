@@ -1,41 +1,31 @@
 import apiService from '@/services/apiService'
-import { IPost, IState, IDel } from '@/interfaces/intefaces'
+import { IPost, IState, IIdx } from '@/interfaces/intefaces'
 import { ActionContext } from 'vuex'
+import { AxiosResponse } from 'axios'
 
 export default {
   state: {
     desktop: [],
     filterValue: '',
-    errors: [],
-    uploaded: false
+    errors: []
   },
   getters: {
-    UPLOADED: (state:IState):boolean => state.uploaded,
-    DESKTOP_DATA: (state:IState):IPost[] => state.desktop,
-    ERROR_DATA: (state:IState):string[] => state.errors,
-    FILTER_DATA: (state:IState):IPost[] => {
+    desktopData: (state:IState):IPost[] => state.desktop,
+    errorData: (state:IState):string[] => state.errors,
+    filterData: (state:IState):IPost[] => {
       if (state.filterValue.length === 0) return state.desktop
+      const filteredItems = state.desktop.filter(item => item.title.indexOf(state.filterValue) !== -1)
+      const calcImportant = (item:IPost) => item.title.split(state.filterValue).length - 1
 
-      const filteredItems = state.desktop.filter((item) => {
-        return item.title.indexOf(state.filterValue) !== -1
-      })
-
-      function calcImportant (item:IPost) {
-        let important = 0
-        return (important += item.title.split(state.filterValue).length - 1)
-      }
-      return filteredItems.sort((itemA, itemb) => calcImportant(itemA) - calcImportant(itemb))
+      return filteredItems.sort((itemA, itemB) => calcImportant(itemA) - calcImportant(itemB))
     }
   },
   mutations: {
     addDesktop (state:IState, payload:IPost):void {
       state.desktop.unshift(payload)
     },
-    setUploaded (state:IState, payload:boolean):void {
-      state.uploaded = payload
-    },
-    removeDesktop (state:IState, payload:IDel):void {
-      state.desktop.splice(payload.idx, payload.del)
+    removeDesktop (state:IState, payload:IIdx):void {
+      state.desktop.splice(payload.idx, 1)
     },
     setData (state:IState, payload:IPost[]):void {
       state.desktop = payload
@@ -51,18 +41,16 @@ export default {
     }
   },
   actions: {
-    getPostsDesktop ({ commit }:ActionContext<IState, IPost>):void {
-      apiService.getPosts()
+    getPostsDesktop ({ commit }:ActionContext<IPost[], string>):Promise<AxiosResponse<IPost[], string>> {
+      return apiService.getPosts()
         .then(response => {
           commit('setData', response.data)
-          commit('setUploaded', true)
           commit('clearErrData')
-          console.log(response)
+          return response
         })
         .catch(error => {
           commit('errData', error)
-          commit('setUploaded', false)
-          console.log(error)
+          throw error
         })
     }
   }

@@ -9,10 +9,10 @@
         <span class="description">дата</span>
       </div>
     </div>
-    <div v-if="HISTORY_DATA.length !== 0">
+    <div v-if="historyData.length !== 0">
       <div class="history-body" v-for="(item, idx) in historyFilter" :key="idx" >
         <span>{{ ++idx }}</span>
-        <span>{{ item.type }}</span>
+        <span>{{ prepareOperationType(item.type) }}</span>
         <span>{{ item.id }}</span>
         <span>{{ item.title }}</span>
         <span>{{ item.date }}</span>
@@ -27,18 +27,32 @@
 <script lang="ts">
 import { mapGetters } from 'vuex'
 import { IPost } from '@/interfaces/intefaces'
+import OperationTypeEnum from '@/enums/OperationTypeEnum'
+
 export default {
   name: 'History',
+  methods: {
+    prepareOperationType (type: string): string {
+      switch (type) {
+        case 'added':
+          return 'Добавление'
+        case 'removed':
+          return 'Удаление'
+        default:
+          return ''
+      }
+    }
+  },
   computed: {
-    ...mapGetters(['HISTORY_DATA']),
+    ...mapGetters(['historyData']),
     historyFilter: function ():IPost[] {
-      if (this.$route.query.filter === 'added') {
-        return this.HISTORY_DATA.filter((item: { type: string }) => item.type === 'Добавление')
+      if (this.$route.query.filter === OperationTypeEnum.ADD) {
+        return this.historyData.filter((item: { type: string}) => item.type === OperationTypeEnum.ADD)
       } else
-      if (this.$route.query.filter === 'deletion') {
-        return this.HISTORY_DATA.filter((item: { type: string }) => item.type === 'Удаление')
+      if (this.$route.query.filter === OperationTypeEnum.REMOVE) {
+        return this.historyData.filter((item: { type: string}) => item.type === OperationTypeEnum.REMOVE)
       } else {
-        return this.HISTORY_DATA
+        return this.historyData
       }
     }
   }
