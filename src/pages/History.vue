@@ -9,9 +9,9 @@
         <span class="description">дата</span>
       </div>
     </div>
-    <div v-if="historyData.length !== 0">
-      <div class="history-body" v-for="(item, idx) in historyFilter" :key="idx" >
-        <span>{{ ++idx }}</span>
+    <div v-if="historyData.length !== 0" class="history-body">
+      <div class="history-body-item" v-for="(item, idx) in historyFilter" :key="idx" >
+        <span>{{ idx+1 }}</span>
         <span>{{ prepareOperationType(item.type) }}</span>
         <span>{{ item.id }}</span>
         <span>{{ item.title }}</span>
@@ -26,13 +26,14 @@
 
 <script lang="ts">
 import { mapGetters } from 'vuex'
-import { IPost } from '@/interfaces/intefaces'
+import { IPost } from '@/interfaces/interfaces'
 import OperationTypeEnum from '@/enums/OperationTypeEnum'
+import Vue from 'vue'
 
-export default {
+export default Vue.extend({
   name: 'History',
   methods: {
-    prepareOperationType (type: string): string {
+    prepareOperationType (type: string | undefined): string {
       switch (type) {
         case 'added':
           return 'Добавление'
@@ -56,5 +57,5 @@ export default {
       }
     }
   }
-}
+})
 </script>

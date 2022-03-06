@@ -1,29 +1,30 @@
 <template>
   <div class="box">
-    <block
+    <div
+      class="block"
       :class="isBasket ? 'block--basket' : ''"
       v-for="(item, idx) in data"
-      :key="idx" :data="item"
+      :key="idx"
     >
-      <template v-slot:b-header="{ item }">
+      <div class="block-header">
         <strong>{{ item.id }}</strong>
         <p>{{ item.title }}</p>
         <button class="btn btn--primary" @click="removeItem(item.id)">{{isBasket ? '-' : '+'}}</button>
-      </template>
-    </block>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { ArrayPropsDefinition } from 'vue/types/options'
-import Block from '@/components/Block.vue'
-export default {
-  components: { Block },
+import { PropType } from 'vue/types/options'
+import Vue from 'vue'
+import { IPost } from '@/interfaces/interfaces'
+export default Vue.extend({
   name: 'Box',
   props: {
     data: {
-      type: Array,
-      default: ():ArrayPropsDefinition<ObjectConstructor> => []
+      type: Array as PropType<IPost[]>,
+      default: () => []
     },
     isBasket: {
       type: Boolean,
@@ -35,5 +36,5 @@ export default {
       this.$emit('removeItem', idx)
     }
   }
-}
+})
 </script>

@@ -38,24 +38,25 @@
 <script lang="ts">
 import Box from '@/components/Box.vue'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
-import { IPost, OperationType } from '@/interfaces/intefaces'
+import { IPost, OperationType } from '@/interfaces/interfaces'
 import moment from 'moment'
 import OperationTypeEnum from '@/enums/OperationTypeEnum'
+import Vue from 'vue'
 
 const DATE_FORMAT = 'DD.MM.YYYY hh:mm'
 
-export default {
+export default Vue.extend({
   name: 'Home',
   components: { Box },
-  created ():void {
-    const hasData = this.desktopData.length > 0 || this.basketData.length > 0
-    if (hasData) return
-    this.getPostsDesktop()
-  },
   data (): { OperationTypeEnum: Readonly<OperationType> } {
     return {
       OperationTypeEnum
     }
+  },
+  created ():void {
+    const hasData = this.desktopData.length > 0 || this.basketData.length > 0
+    if (hasData) return
+    this.getPostsDesktop()
   },
   methods: {
     ...mapMutations([
@@ -94,7 +95,7 @@ export default {
         }
       })
     },
-    writeToHistory (id: number, title: string, type: OperationType, date: string):void {
+    writeToHistory (id: number, title: string, type: string, date: string):void {
       this.recordingHistory({ id, title, type, date })
     }
   },
@@ -115,5 +116,5 @@ export default {
       }
     }
   }
-}
+})
 </script>
