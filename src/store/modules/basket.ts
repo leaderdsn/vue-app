@@ -1,4 +1,4 @@
-import { IPost, IState, IIdx } from '@/interfaces/intefaces'
+import { IPost, IState, IIdx } from '@/interfaces/interfaces'
 
 export default {
   state: {

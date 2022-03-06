@@ -1,5 +1,5 @@
 import apiService from '@/services/apiService'
-import { IPost, IState, IIdx } from '@/interfaces/intefaces'
+import { IPost, IState, IIdx } from '@/interfaces/interfaces'
 import { ActionContext } from 'vuex'
 import { AxiosResponse } from 'axios'
 

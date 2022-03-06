@@ -6,7 +6,7 @@ export interface IPost {
   title: string
   body?: string
   userId?: number
-  type?: OperationType
+  type?: string
   date?: string
 }
 export interface IIdx {

@@ -1,4 +1,4 @@
-import { IPost, IState } from '@/interfaces/intefaces'
+import { IPost, IState } from '@/interfaces/interfaces'
 export const SOME_MUTATION = 'SOME_MUTATION'
 export default {
   state: {
