@@ -52,7 +52,7 @@ export default {
     if (hasData) return
     this.getPostsDesktop()
   },
-  data (): { OperationTypeEnum: Readonly<{ ADD: string; REMOVE: string }> } {
+  data (): { OperationTypeEnum: Readonly<OperationType> } {
     return {
       OperationTypeEnum
     }
