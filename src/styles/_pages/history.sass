@@ -21,5 +21,15 @@
       padding: 0
   &-body
     display: grid
-    grid-template-columns: 50px 120px 50px 1fr 150px
-    grid-gap: 20px
+    grid-template-columns: 1fr
+    align-items: center
+    &-item
+      display: grid
+      grid-template-columns: 50px 120px 50px 1fr 150px
+      grid-gap: 20px
+      padding: 4px 0
+      box-sizing: border-box
+      border-bottom: 1px solid $border-color
+      span
+        display: grid
+        align-content: center
