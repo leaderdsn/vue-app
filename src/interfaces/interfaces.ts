@@ -1,6 +1,3 @@
-import OperationTypeEnum from '@/enums/OperationTypeEnum'
-
-export declare type OperationType = typeof OperationTypeEnum
 export interface IPost {
   id: number
   title: string
