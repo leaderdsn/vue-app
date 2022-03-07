@@ -21,11 +21,11 @@
     </div>
     <div class="home-body">
       <div class="home-body-item">
-        <ui v-if="errorData.length > 0" class="errors-list">
+        <ul v-if="errorData.length > 0" class="errors-list">
           <li v-for="(error, idx) in errorData" :key="idx">
             <strong>{{ error }}</strong>
           </li>
-        </ui>
+        </ul>
         <box v-else-if="filterData.length > 0" :data="filterData" :isBasket="false" @removeItem="addItemToBasket"/>
       </div>
       <div class="home-body-item">
@@ -38,9 +38,9 @@
 <script lang="ts">
 import Box from '@/components/Box.vue'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
-import { IPost, OperationType } from '@/interfaces/interfaces'
+import { IPost } from '@/interfaces/interfaces'
 import moment from 'moment'
-import OperationTypeEnum from '@/enums/OperationTypeEnum'
+import { OperationTypeEnum } from '@/enums'
 import Vue from 'vue'
 
 const DATE_FORMAT = 'DD.MM.YYYY hh:mm'
@@ -48,7 +48,7 @@ const DATE_FORMAT = 'DD.MM.YYYY hh:mm'
 export default Vue.extend({
   name: 'Home',
   components: { Box },
-  data (): { OperationTypeEnum: Readonly<OperationType> } {
+  data () {
     return {
       OperationTypeEnum
     }
