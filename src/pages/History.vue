@@ -27,7 +27,7 @@
 <script lang="ts">
 import { mapGetters } from 'vuex'
 import { IPost } from '@/interfaces/interfaces'
-import OperationTypeEnum from '@/enums/OperationTypeEnum'
+import { OperationTypeEnum } from '@/enums'
 import Vue from 'vue'
 
 export default Vue.extend({
@@ -48,10 +48,10 @@ export default Vue.extend({
     ...mapGetters(['historyData']),
     historyFilter: function ():IPost[] {
       if (this.$route.query.filter === OperationTypeEnum.ADD) {
-        return this.historyData.filter((item: { type: string}) => item.type === OperationTypeEnum.ADD)
+        return this.historyData.filter((item: IPost) => item.type === OperationTypeEnum.ADD)
       } else
       if (this.$route.query.filter === OperationTypeEnum.REMOVE) {
-        return this.historyData.filter((item: { type: string}) => item.type === OperationTypeEnum.REMOVE)
+        return this.historyData.filter((item: IPost) => item.type === OperationTypeEnum.REMOVE)
       } else {
         return this.historyData
       }
