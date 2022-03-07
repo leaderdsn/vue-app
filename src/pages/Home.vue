@@ -38,7 +38,7 @@
 <script lang="ts">
 import Box from '@/components/Box.vue'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
-import { IPost } from '@/interfaces/interfaces'
+import { IPost } from '@/interfaces'
 import moment from 'moment'
 import { OperationTypeEnum } from '@/enums'
 import Vue from 'vue'

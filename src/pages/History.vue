@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { mapGetters } from 'vuex'
-import { IPost } from '@/interfaces/interfaces'
+import { IPost } from '@/interfaces'
 import { OperationTypeEnum } from '@/enums'
 import Vue from 'vue'
 

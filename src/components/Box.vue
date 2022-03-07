@@ -18,7 +18,7 @@
 <script lang="ts">
 import { PropType } from 'vue/types/options'
 import Vue from 'vue'
-import { IPost } from '@/interfaces/interfaces'
+import { IPost } from '@/interfaces'
 export default Vue.extend({
   name: 'Box',
   props: {
