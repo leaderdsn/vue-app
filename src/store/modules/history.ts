@@ -1,4 +1,4 @@
-import { IPost, IState } from '@/interfaces/interfaces'
+import { IPost, IState } from '@/interfaces'
 export default {
   state: {
     history: []

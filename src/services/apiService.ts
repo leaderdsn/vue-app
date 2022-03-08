@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios'
-import { IPost } from '@/interfaces/interfaces'
+import { IPost } from '@/interfaces'
 
 const headers = {
   Accept: 'application/json',
